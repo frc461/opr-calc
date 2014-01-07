@@ -59,14 +59,29 @@ class Matrix
 		end
 		Matrix[*l]
 	end
+
+	def output
+		(0..self.row_size - 1).each do |row_number|
+			(0..self.column_size - 1).each do |column_number|
+				printf("%8.4f ", self[row_number, column_number])
+			end
+			printf("\n")
+		end
+	end
 end
 
-l = Matrix[[25,15,-5],
-           [15,18, 0],
-           [-5, 0,11]].cholesky_factor
+original = Matrix[[ 25, 15, -5],
+                  [ 15, 18,  0],
+                  [ -5,  0, 11]]
+
+l = original.cholesky_factor
 
 lt = l.t
 
-puts "L => #{l}"
-puts "L* => #{lt}"
-puts "Prod => #{l * lt} :D"
+puts "L"
+l.output
+puts "L^T"
+lt.output
+
+puts "Original"
+(l * lt).output
