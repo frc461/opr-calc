@@ -78,10 +78,13 @@ l = original.cholesky_factor
 
 lt = l.t
 
+puts "Original"
+original.output
+
 puts "L"
 l.output
 puts "L^T"
 lt.output
 
-puts "Original"
+puts "Original (from teh other stuffies)"
 (l * lt).output
