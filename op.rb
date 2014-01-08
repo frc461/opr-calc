@@ -16,7 +16,7 @@ class Matrix
 	end
 
 	def cholesky_factor
-		raise ArgumentError, "must provide symmetric matrix" unless symmetric?
+		raise ArgumentError, "You must provide symmetric matrix" unless symmetric?
 
 		l = Array.new(row_size) {Array.new(row_size, 0)}
 
@@ -78,3 +78,5 @@ equation is now [L][Y] = [S]
 find [Y] through forward substitution
 find [OPR] through backward substitution
 =end
+
+
