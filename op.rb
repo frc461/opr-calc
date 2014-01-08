@@ -46,24 +46,24 @@ class Matrix
 	end
 end
 
-original = Matrix[[ 25, 15, -5],
-                  [ 15, 18,  0],
-                  [ -5,  0, 11]]
+# original = Matrix[[ 25, 15, -5],
+#                   [ 15, 18,  0],
+#                   [ -5,  0, 11]]
 
-l = original.cholesky_factor
+# l = original.cholesky_factor
 
-lt = l.t
+# lt = l.t
 
-puts "Original"
-original.output
+# puts "Original"
+# original.output
 
-puts "L"
-l.output
-puts "L^T"
-lt.output
+# puts "L"
+# l.output
+# puts "L^T"
+# lt.output
 
-puts "Original (from teh other stuffies)"
-(l * lt).output
+# puts "Original (from teh other stuffies)"
+# (l * lt).output
 
 =begin
 base matrix equation: [A][OPR] = [SCORE]
@@ -79,4 +79,49 @@ find [Y] through forward substitution
 find [OPR] through backward substitution
 =end
 
+def alliance_smooshey(redmatrix, bluematrix)
+	throw ArgumentError "Matrices must have same dimensions" unless (redmatrix.row_size == bluematrix.row_size) && (redmatrix.column_size == bluematrix.column_size)
 
+	puts "Both should have #{redmatrix.row_size} rows and #{redmatrix.column_size} columns"
+
+	column_count = redmatrix.column_size
+	row_count = redmatrix.row_size
+
+	matrix = []
+
+	Matrix.build(row_count * 2, column_count) {
+		|row, column|
+
+		if row % 2 == 0 # we're going to add red row (red-first)
+			redmatrix[row / 2, column]
+		elsif row % 2 == 1 # we're going to add blue row (blue-second)
+			bluematrix[row / 2, column]
+		end
+	}
+end
+
+def opr_calculate(ared, ablue, scorered, scoreblue)
+end
+
+test_redmatrix = Matrix[[0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+test_bluematrix = Matrix[[0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                         [0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                         [0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+
+test_redscores = Matrix[[11],
+                        [13],
+                        [17],
+                        [19],
+                        [23]]
+
+test_bluescores = Matrix[[11],
+                         [13],
+                         [17],
+                         [19],
+                         [23]]
+
+alliance_smooshey(test_redmatrix, test_bluematrix).output
+alliance_smooshey(test_redscores, test_bluescores).output
