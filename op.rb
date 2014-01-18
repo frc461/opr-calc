@@ -101,18 +101,29 @@ def alliance_smooshey(redmatrix, bluematrix)
 	matrix = []
 
 	# Use a block function to generate the new matrix
-	Matrix.build(row_count * 2, column_count) {
+	matrix = Matrix.build(row_count * 2, column_count) {
 		|row, column|
 
-		# If the current row number is even
-		if row % 2 == 0 # we're going to add red row (red-first)
+		# If the current row number is even, add red row (red-first)
+		if row % 2 == 0
 			redmatrix[row / 2, column]
 
-		# If the current row number is odd
-		elsif row % 2 == 1 # we're going to add blue row (blue-second)
+		# If the current row number is odd, add blue row (blue-second)
+		elsif row % 2 == 1
 			bluematrix[row / 2, column]
 		end
 	}
+
+	# This will end up looking like as follows:
+
+	# [[red[0]],
+	#  [blue[0]],
+	#  [red[1]],
+	#  [blue[1]],
+	#  [red[2]],
+	#  [blue[2]],
+	#  ...]
+	return matrix
 end
 
 def opr_calculate(ared, ablue, scorered, scoreblue)
