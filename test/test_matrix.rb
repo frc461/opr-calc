@@ -23,7 +23,7 @@ require "opr-calc"
 
 class MatrixTest < Minitest::Test
 	def setup
-		# matrix from wikipedia
+		# Matrix from Wikipedia
 		@matrix = Matrix[[  4,  12, -16],
 		                 [ 12,  37, -43],
 		                 [-16, -43,  98]]
@@ -33,8 +33,9 @@ class MatrixTest < Minitest::Test
 		non_symmetric_matrix = Matrix[[3, 5, 3],
 		                              [2, 4, 2],
 		                              [5, 2, 1]]
+		
 		assert @matrix.symmetric?
-		assert !non_symmetric_matrix.symmetric?
+		refute non_symmetric_matrix.symmetric?
 	end
 
 	def test_cholesky_decomposition
