@@ -20,9 +20,8 @@ require "matrix"
 
 # Props to http://rosettacode.org/wiki/Cholesky_decomposition#Ruby :L
 class Matrix
-	# Returns whether or not the Matrix is symmetric (http://en.wikipedia.org/wiki/Symmetric_matrix)
+	# Returns whether or not the Matrix is symmetric (http://en.wikipedia.org/wiki/Symmetric_matrix).
 	def symmetric?
-
 		# Matrices can't be symmetric if they're not square.
 		return false if not square?
 
@@ -39,7 +38,7 @@ class Matrix
 		# We need a symmetric matrix for Cholesky.
 		raise ArgumentError, "You must provide symmetric matrix" unless symmetric?
 
-		# Make a new matrix to return
+		# Make a new matrix to return.
 		l = Array.new(row_size) { Array.new(row_size, 0) }
 
 		(0...row_size).each do |k|
@@ -59,7 +58,7 @@ class Matrix
 		Matrix[*l]
 	end
 
-	# A helpful debug function for Matrices
+	# A helpful debug function for Matrices.
 	def output
 		(0..self.row_size - 1).each do |row_number|
 			(0..self.column_size - 1).each do |column_number|
@@ -67,6 +66,7 @@ class Matrix
 			end
 			printf("\n")
 		end
+		
 		self
 	end
 end
@@ -80,14 +80,17 @@ class ScoreSet
 		@ared = value
 		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
 	end
+	
 	def ablue=(value)
 		@ablue = value
 		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
 	end
+	
 	def scorered=(value)
 		@scorered = value
 		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
 	end
+	
 	def scoreblue=(value)
 		@scoreblue = value
 		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
@@ -109,11 +112,11 @@ class ScoreSet
 		column_count = redmatrix.column_size
 		row_count = redmatrix.row_size
 
-		# Use a block function to generate the new matrix
+		# Use a block function to generate the new matrix.
 		matrix = Matrix.build(row_count * 2, column_count) do
 			|row, column|
 
-			# note: no need to alternate, instead put all red, then all blue
+			# note: no need to alternate, instead put all red, then all blue.
 			if row < row_count 	# first half = red
 				redmatrix[row, column]
 			else                # second half = blue
@@ -139,7 +142,7 @@ class ScoreSet
 
 	# Solve equation of form [l][x] = [s] for [x]
 	# l must be a lower triangular matrix.
-	# Based off of algorithm given at http://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution
+	# Based off of algorithm given at `http://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution`.
 	def forward_substitute(l, s)
 		raise "l must be a lower triangular matrix" unless l.lower_triangular?
 
@@ -147,9 +150,11 @@ class ScoreSet
 
 		x.size.times do |i|
 			x[i] = s[i, 0]
+			
 			i.times do |j|
 				x[i] -= l[i, j] * x[j]
 			end
+			
 			x[i] /= l[i, i]
 		end
 
@@ -165,9 +170,11 @@ class ScoreSet
 
 		(x.size - 1).downto 0 do |i|
 			x[i] = s[i, 0]
+			
 			(i + 1).upto(x.size - 1) do |j|
 				x[i] -= u[i, j] * x[j]
 			end
+			
 			x[i] /= u[i, i]
 		end
 
@@ -177,18 +184,18 @@ class ScoreSet
 	private :forward_substitute, :back_substitute
 
 =begin
- base matrix equation: [A][OPR] = [SCORE]
- define [A]^t to be [A] transpose
- define [P] to be [A]^t[A]
- define [S] to be [A]^t[SCORE]
- equation is now [P][OPR] = [S]
- refactor [P] as [L][L]^t using cholesky
- [L] is a lower triangular matrix and [L]^t an upper
- Therefore [L][L]^t[OPR] = [S]
- define [Y] = [L]^t[OPR]
- equation is now [L][Y] = [S]
- find [Y] through forward substitution
- find [OPR] through back substitution
+	base matrix equation: [A][OPR] = [SCORE]
+	define [A]^t to be [A] transpose
+	define [P] to be [A]^t[A]
+	define [S] to be [A]^t[SCORE]
+	equation is now [P][OPR] = [S]
+	refactor [P] as [L][L]^t using cholesky
+	[L] is a lower triangular matrix and [L]^t an upper
+	Therefore [L][L]^t[OPR] = [S]
+	define [Y] = [L]^t[OPR]
+	equation is now [L][Y] = [S]
+	find [Y] through forward substitution
+	find [OPR] through back substitution
 =end
 
 	def opr_calculate(a, score)
@@ -204,8 +211,8 @@ class ScoreSet
 		back_substitute l.t, y
 	end
 
-	# Offensive power rating: the average amount of points that a team contributes to their alliance's score
-	# This is high for a good team
+	# Offensive power rating: the average amount of points that a team contributes to their alliance's score.
+	# This is high for a good team.
 	def opr(recalc = false)
 		if !@opr || recalc || @opr_recalc
 			a = alliance_smooshey @ared, @ablue
@@ -214,24 +221,26 @@ class ScoreSet
 			@opr = opr_calculate a, score
 			@opr_recalc = false
 		end
+		
 		@opr
 	end
 
-	# Defensive power rating: the average amount of points that a team lets the other alliance score
-	# This is low for a good team
+	# Defensive power rating: the average amount of points that a team lets the other alliance score.
+	# This is low for a good team.
 	def dpr(recalc = false)
 		if !@dpr || recalc || @dpr_recalc
 			a = alliance_smooshey @ared, @ablue
-			score = alliance_smooshey @scoreblue, @scorered # intentionally swapped, that's how dpr works
+			score = alliance_smooshey @scoreblue, @scorered # intentionally swapped, that's how dpr works.
 			
 			@dpr = opr_calculate a, score
 			@dpr_recalc = false
 		end
+		
 		@dpr
 	end
 
-	# Calculated contribution to winning margin: the average amount of points that a team contributes to their alliance's winning margin
-	# This is high for a good team
+	# Calculated contribution to winning margin: the average amount of points that a team contributes to their alliance's winning margin.
+	# This is high for a good team.
 	def ccwm(recalc = false)
 		if !@ccwm || recalc || @ccwm_recalc
 			a = alliance_smooshey @ared, @ablue
@@ -239,6 +248,7 @@ class ScoreSet
 			red_wm = Matrix.build(@scorered.row_size, @scorered.column_size) do |row, column|
 				@scorered[row, column] - @scoreblue[row, column]
 			end
+			
 			blue_wm = Matrix.build(@scoreblue.row_size, @scoreblue.column_size) do |row, column|
 				@scoreblue[row, column] - @scorered[row, column]
 			end
@@ -248,6 +258,7 @@ class ScoreSet
 			@ccwm = opr_calculate a, score
 			@ccwm_recalc = false
 		end
+		
 		@ccwm
 	end
 
@@ -260,7 +271,7 @@ def test_stuff
 	# Team 2 opr: 2
 	# ...
 
-	# I don't think any team is every playing on both blue and red at the same time, but I might be wrong
+	# I don't think any team is every playing on both blue and red at the same time, but I might be wrong.
 
 	#                   0  1  2  3  4  5  6  7  8  9
 	test_ared = Matrix[[1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
@@ -319,5 +330,5 @@ def test_stuff
 	puts "CCWM by OPR - DPR:"
 	(test.opr - test.dpr).output
 
-	return true
+	true
 end
