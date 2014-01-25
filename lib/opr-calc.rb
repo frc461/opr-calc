@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 =begin
     opr-calc is a tool for calculating OPR and other scouting stats for FRC teams.
     Copyright (C) 2014 Kristofer Rye and Christopher Cooper
