@@ -34,8 +34,10 @@ class Matrix
 		true
 	end
 
+	# Determines the [L] matrix through Cholesky decomposition.
+	# To obtain [L]*, just transpose the matrix, it should work.
 	def cholesky_factor
-		# We need a symmetric matrix for Cholesky.
+		# We need a symmetric matrix for Cholesky decomposition.
 		raise ArgumentError, "You must provide a symmetric matrix." unless symmetric?
 
 		# Make a new matrix to return.
