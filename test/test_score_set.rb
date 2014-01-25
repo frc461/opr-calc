@@ -61,7 +61,7 @@ class ScoreSetTest < Minitest::Test
 		@score_set = OPRCalc::ScoreSet.new test_ared, test_ablue, test_scorered, test_scoreblue
 	end
 
-	def test_expected_opr
+	def test_opr
 		expected_opr = Matrix[[0],
 		                      [1],
 		                      [2],
