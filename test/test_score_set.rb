@@ -91,4 +91,10 @@ class ScoreSetTest < Minitest::Test
 	def test_compare_opr_dpr_ccwm
 		assert_equal @score_set.ccwm.round(2), (@score_set.opr - @score_set.dpr).round(2)
 	end
+
+	# Ensure that a TypeError will get thrown when an argument to
+	# the constructor is not a Matrix.
+	def test_constructor_not_matrix
+		assert_raises(TypeError) { OPRCalc::ScoreSet.new "this", "will", "raise", "TypeError" }
+	end
 end
