@@ -16,7 +16,73 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Here is where the OPR calculation is tested.
-
 require "minitest/autorun"
 require "opr-calc"
+
+class ScoreSetTest < Minitest::Test
+	def setup
+		# Team 0 opr: 0
+		# Team 1 opr: 1
+		# Team 2 opr: 2
+		# ...
+
+		# I don't think any team is every playing on both blue and red at the same time, but I might be wrong.
+
+		# 0 1 2 3 4 5 6 7 8 9
+		test_ared = Matrix[[1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+		                   [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
+		                   [0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+		                   [0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+		                   [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
+		                   [1, 0, 0, 1, 0, 0, 1, 0, 0, 0]]
+
+		# 0 1 2 3 4 5 6 7 8 9
+		test_ablue = Matrix[[0, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+		                    [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+		                    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+		                    [0, 0, 1, 0, 0, 1, 1, 0, 0, 0],
+		                    [0, 0, 0, 1, 0, 0, 0, 0, 1, 1],
+		                    [0, 1, 0, 0, 1, 0, 0, 1, 0, 0]]
+
+		test_scorered = Matrix[[6],
+		                       [9],
+		                       [15],
+		                       [24],
+		                       [12],
+		                       [9]]
+
+		test_scoreblue = Matrix[[18],
+		                        [12],
+		                        [3],
+		                        [13],
+		                        [20],
+		                        [12]]
+
+		@score_set = OPRCalc::ScoreSet.new test_ared, test_ablue, test_scorered, test_scoreblue
+	end
+
+	def test_expected_opr
+		expected_opr = Matrix[[0],
+		                      [1],
+		                      [2],
+		                      [3],
+		                      [4],
+		                      [5],
+		                      [6],
+		                      [7],
+		                      [8],
+		                      [9]]
+
+		assert_equal expected_opr, @score_set.opr.round
+	end
+end
+
+# These are not tested.
+#
+# puts "DPR:"
+# test.dpr.output
+#
+# puts "CCWM:"
+# test.ccwm.output
+# puts "CCWM by OPR - DPR:"
+# (test.opr - test.dpr).output
