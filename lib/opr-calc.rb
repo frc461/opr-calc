@@ -118,7 +118,7 @@ class ScoreSet
 			# note: no need to alternate, instead put all red, then all blue
 			if row < row_count 	# first half = red
 				redmatrix[row, column]
-			else 				# second half = blue
+			else                # second half = blue
 				bluematrix[row - row_count, column]
 			end
 		end
