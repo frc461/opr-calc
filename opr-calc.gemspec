@@ -7,4 +7,7 @@ Gem::Specification.new do |s|
 	s.files       = ["lib/opr-calc.rb"] + Dir.glob("lib/**/*.rb")
 	s.required_ruby_version = ">= 1.9.3"
 	s.license     = "GPL-3.0"
+
+	s.add_development_dependency "minitest"
+	s.add_development_dependency "rake"
 end
