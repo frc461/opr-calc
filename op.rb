@@ -2,23 +2,29 @@
 
 require 'matrix'
 
-# props to http://rosettacode.org/wiki/Cholesky_decomposition#Ruby :L
-
+# Props to http://rosettacode.org/wiki/Cholesky_decomposition#Ruby :L
 class Matrix
+	# Returns whether or not the Matrix is symmetric (http://en.wikipedia.org/wiki/Symmetric_matrix)
 	def symmetric?
+
+		# Matrices can't be symmetric if they're not square.
 		return false if not square?
+
 		(0...row_size).each do |i|
 			(0..i).each do |j|
 				return false if self[i,j] != self[j,i]
 			end
 		end
+
 		true
 	end
 
 	def cholesky_factor
+		# We need a symmetric matrix for Cholesky.
 		raise ArgumentError, "You must provide symmetric matrix" unless symmetric?
 
-		l = Array.new(row_size) {Array.new(row_size, 0)}
+		# Make a new matrix to return
+		l = Array.new(row_size) { Array.new(row_size, 0) }
 
 		(0...row_size).each do |k|
 			(0...row_size).each do |i|
@@ -33,9 +39,11 @@ class Matrix
 				end
 			end
 		end
+
 		Matrix[*l]
 	end
 
+	# A helpful debug function for Matrices
 	def output
 		(0..self.row_size - 1).each do |row_number|
 			(0..self.column_size - 1).each do |column_number|
@@ -77,24 +85,39 @@ class ScoreSet
 		@scoreblue = scoreblue
 	end
 
+	# A generic function for smooshing two matrices (one red, one blue).
+	# Each should have the same dimensions.
 	def alliance_smooshey(redmatrix, bluematrix)
 		throw ArgumentError "Matrices must have same dimensions" unless (redmatrix.row_size == bluematrix.row_size) && (redmatrix.column_size == bluematrix.column_size)
 
-		# puts "Both should have #{redmatrix.row_size} rows and #{redmatrix.column_size} columns"
-
+		# Then we just pull the column and row size from the red matrix because we can.
 		column_count = redmatrix.column_size
 		row_count = redmatrix.row_size
 
-		Matrix.build(row_count * 2, column_count) do
+		# Use a block function to generate the new matrix
+		matrix = Matrix.build(row_count * 2, column_count) do
 			|row, column|
 
 			# note: no need to alternate, instead put all red, then all blue
-			if row < row_count
+			if row < row_count 	# first half = red
 				redmatrix[row, column]
-			else 
+			else 				# second half = blue
 				bluematrix[row - row_count, column]
 			end
 		end
+		# This will end up looking like as follows:
+
+		# [[red[0]],
+		#  [red[1]],
+		#  [red[2]],
+		#  ...
+		#  [red[n]],
+		#  [blue[0]],
+		#  [blue[1]],
+		#  [blue[2]],
+		#  ...
+		#  [blue[n]]]
+		return matrix
 	end
 
 	private :alliance_smooshey
@@ -218,6 +241,7 @@ def test_stuff
 	                    [0, 0, 1, 0, 0, 1, 1, 0, 0, 0],
 	                    [0, 0, 0, 1, 0, 0, 0, 0, 1, 1],
 	                    [0, 1, 0, 0, 1, 0, 0, 1, 0, 0]]
+
 
 	test_scorered = Matrix[[6],
 	                       [9],
