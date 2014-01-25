@@ -58,10 +58,24 @@ end
 
 
 class ScoreSet
-	attr_accessor :ared
-	attr_accessor :ablue
-	attr_accessor :scorered
-	attr_accessor :scoreblue
+	attr_reader :ared, :ablue, :scorered, :scoreblue
+
+	def ared=(value)
+		@ared = value
+		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
+	end
+	def ablue=(value)
+		@ablue = value
+		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
+	end
+	def scorered=(value)
+		@scorered = value
+		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
+	end
+	def scoreblue=(value)
+		@scoreblue = value
+		@opr_recalc = @dpr_recalc = @ccwm_recalc = true
+	end
 
 	def initialize(ared, ablue, scorered, scoreblue)
 		@ared = ared
@@ -174,30 +188,36 @@ class ScoreSet
 		back_substitute l.t, y
 	end
 
+	# Offensive power rating: the average amount of points that a team contributes to their alliance's score
+	# This is high for a good team
 	def opr(recalc = false)
-		if !@opr || recalc
+		if !@opr || recalc || @opr_recalc
 			a = alliance_smooshey @ared, @ablue
 			score = alliance_smooshey @scorered, @scoreblue
 			
 			@opr = opr_calculate a, score
-		else
-			@opr
+			@opr_recalc = false
 		end
+		@opr
 	end
 
+	# Defensive power rating: the average amount of points that a team lets the other alliance score
+	# This is low for a good team
 	def dpr(recalc = false)
-		if !@dpr || recalc
+		if !@dpr || recalc || @dpr_recalc
 			a = alliance_smooshey @ared, @ablue
 			score = alliance_smooshey @scoreblue, @scorered # intentionally swapped, that's how dpr works
 			
 			@dpr = opr_calculate a, score
-		else
-			@dpr
+			@dpr_recalc = false
 		end
+		@dpr
 	end
 
+	# Calculated contribution to winning margin: the average amount of points that a team contributes to their alliance's winning margin
+	# This is high for a good team
 	def ccwm(recalc = false)
-		if !@ccwm || recalc
+		if !@ccwm || recalc || @ccwm_recalc
 			a = alliance_smooshey @ared, @ablue
 			
 			red_wm = Matrix.build(@scorered.row_size, @scorered.column_size) do |row, column|
@@ -210,9 +230,9 @@ class ScoreSet
 			score = alliance_smooshey red_wm, blue_wm
 
 			@ccwm = opr_calculate a, score
-		else
-			@ccwm
+			@ccwm_recalc = false
 		end
+		@ccwm
 	end
 
 end
@@ -282,4 +302,6 @@ def test_stuff
 	test.ccwm.output
 	puts "CCWM by OPR - DPR:"
 	(test.opr - test.dpr).output
+
+	return true
 end
