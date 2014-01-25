@@ -20,3 +20,30 @@
 
 require "minitest/autorun"
 require "opr-calc"
+
+class MatrixTest < Minitest::Test
+	def setup
+		# matrix from wikipedia
+		@matrix = Matrix[[  4,  12, -16],
+		                 [ 12,  37, -43],
+		                 [-16, -43,  98]]
+	end
+
+	def test_symmetric_test
+		non_symmetric_matrix = Matrix[[3, 5, 3],
+		                              [2, 4, 2],
+		                              [5, 2, 1]]
+		assert @matrix.symmetric?
+		assert !non_symmetric_matrix.symmetric?
+	end
+
+	def test_cholesky_decomposition
+		expected_decomposition = Matrix[[ 2, 0, 0],
+		                                [ 6, 1, 0],
+		                                [-8, 5, 3]]
+
+		assert_equal expected_decomposition, @matrix.cholesky_factor
+	end
+end
+
+# Not tested: output

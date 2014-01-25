@@ -75,14 +75,20 @@ class ScoreSetTest < Minitest::Test
 
 		assert_equal expected_opr, @score_set.opr.round
 	end
-end
 
-# These are not tested.
-#
-# puts "DPR:"
-# test.dpr.output
-#
-# puts "CCWM:"
-# test.ccwm.output
-# puts "CCWM by OPR - DPR:"
-# (test.opr - test.dpr).output
+	def test_dpr
+		@score_set.dpr.each do |cell|
+			assert (cell.is_a? Numeric) && cell.finite?
+		end
+	end
+
+	def test_ccwm
+		@score_set.ccwm.each do |cell|
+			assert (cell.is_a? Numeric) && cell.finite?
+		end
+	end
+
+	def test_compare_opr_dpr_ccwm
+		assert_equal @score_set.ccwm.round(2), (@score_set.opr - @score_set.dpr).round(2)
+	end
+end
