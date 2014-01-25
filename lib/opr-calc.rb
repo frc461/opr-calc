@@ -23,7 +23,7 @@ class Matrix
 	# Returns whether or not the Matrix is symmetric (http://en.wikipedia.org/wiki/Symmetric_matrix).
 	def symmetric?
 		# Matrices can't be symmetric if they're not square.
-		return false if not square?
+		return false unless square?
 
 		(0...row_size).each do |i|
 			(0..i).each do |j|
@@ -123,6 +123,7 @@ class ScoreSet
 				bluematrix[row - row_count, column]
 			end
 		end
+		
 		# This will end up looking like as follows:
 
 		# [[red[0]],
@@ -261,74 +262,4 @@ class ScoreSet
 		
 		@ccwm
 	end
-
-end
-
-
-def test_stuff
-	# Team 0 opr: 0
-	# Team 1 opr: 1
-	# Team 2 opr: 2
-	# ...
-
-	# I don't think any team is every playing on both blue and red at the same time, but I might be wrong.
-
-	#                   0  1  2  3  4  5  6  7  8  9
-	test_ared = Matrix[[1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
-	                   [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
-	                   [0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-	                   [0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-	                   [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
-	                   [1, 0, 0, 1, 0, 0, 1, 0, 0, 0]]
-
-	#                    0  1  2  3  4  5  6  7  8  9
-	test_ablue = Matrix[[0, 0, 1, 0, 0, 0, 0, 1, 0, 1],
-	                    [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
-	                    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-	                    [0, 0, 1, 0, 0, 1, 1, 0, 0, 0],
-	                    [0, 0, 0, 1, 0, 0, 0, 0, 1, 1],
-	                    [0, 1, 0, 0, 1, 0, 0, 1, 0, 0]]
-
-
-	test_scorered = Matrix[[6],
-	                       [9],
-	                       [15],
-	                       [24],
-	                       [12],
-	                       [9]]
-
-	test_scoreblue = Matrix[[18],
-	                        [12],
-	                        [3],
-	                        [13],
-	                        [20],
-	                        [12]]
-
-	test_expectedopr = Matrix[[0],
-	                          [1],
-	                          [2],
-	                          [3],
-	                          [4],
-	                          [5],
-	                          [6],
-	                          [7],
-	                          [8],
-	                          [9]]
-
-	test = ScoreSet.new test_ared, test_ablue, test_scorered, test_scoreblue
-
-	puts "Expected OPR:"
-	test_expectedopr.output
-	puts "Actual OPR:"
-	test.opr.output
-	
-	puts "DPR:"
-	test.dpr.output
-	
-	puts "CCWM:"
-	test.ccwm.output
-	puts "CCWM by OPR - DPR:"
-	(test.opr - test.dpr).output
-
-	true
 end
