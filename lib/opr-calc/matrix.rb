@@ -36,7 +36,7 @@ class Matrix
 
 	def cholesky_factor
 		# We need a symmetric matrix for Cholesky.
-		raise ArgumentError, "You must provide a symmetric matrix." unless symmetric?
+		raise ArgumentError, "must provide a symmetric matrix" unless symmetric?
 
 		# Make a new matrix to return.
 		l = Array.new(row_size) { Array.new(row_size, 0) }

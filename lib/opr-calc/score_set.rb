@@ -41,6 +41,11 @@ module OPRCalc
 		end
 
 		def initialize(ared, ablue, scorered, scoreblue)
+			raise TypeError, "ared must be a Matrix" unless ared.is_a? Matrix
+			raise TypeError, "ablue must be a Matrix" unless ablue.is_a? Matrix
+			raise TypeError, "scorered must be a Matrix" unless scorered.is_a? Matrix
+			raise TypeError, "scoreblue must be a Matrix" unless scoreblue.is_a? Matrix
+			
 			@ared = ared
 			@ablue = ablue
 			@scorered = scorered
