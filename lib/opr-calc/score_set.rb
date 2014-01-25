@@ -126,21 +126,19 @@ class ScoreSet
 	end
 
 	private :forward_substitute, :back_substitute
-
-	=begin
-		 base matrix equation: [A][OPR] = [SCORE]
-		 define [A]^t to be [A] transpose
-		 define [P] to be [A]^t[A]
-		 define [S] to be [A]^t[SCORE]
-		 equation is now [P][OPR] = [S]
-		 refactor [P] as [L][L]^t using cholesky
-		 [L] is a lower triangular matrix and [L]^t an upper
-		 Therefore [L][L]^t[OPR] = [S]
-		 define [Y] = [L]^t[OPR]
-		 equation is now [L][Y] = [S]
-		 find [Y] through forward substitution
-		 find [OPR] through back substitution
-		 =end
+	
+	# base matrix equation: [A][OPR] = [SCORE]
+	# define [A]^t to be [A] transpose
+	# define [P] to be [A]^t[A]
+	# define [S] to be [A]^t[SCORE]
+	# equation is now [P][OPR] = [S]
+	# refactor [P] as [L][L]^t using cholesky
+	# [L] is a lower triangular matrix and [L]^t an upper
+	# Therefore [L][L]^t[OPR] = [S]
+	# define [Y] = [L]^t[OPR]
+	# equation is now [L][Y] = [S]
+	# find [Y] through forward substitution
+	# find [OPR] through back substitution
 
 	def opr_calculate(a, score)
 		p = a.t * a
