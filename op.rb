@@ -35,7 +35,7 @@ class Matrix
 				elsif i > k
 					sum = (0..k-1).inject(0.0) {|sum, j| sum + l[i][j] * l[k][j]}
 					val = (self[k,i] - sum) / l[k][k]
-					l[i][k] = val.nan? ? 0 : val
+					l[i][k] = val
 				end
 			end
 		end
