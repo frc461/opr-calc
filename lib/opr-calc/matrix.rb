@@ -66,10 +66,10 @@ class Matrix
 			(0..self.column_size - 1).each do |column_number|
 				printf("%8.4f ", self[row_number, column_number])
 			end
-			
+
 			printf("\n")
 		end
-		
+
 		self
 	end
 end
