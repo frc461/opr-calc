@@ -34,6 +34,8 @@ class Matrix
 		true
 	end
 
+	# Determines the [L] matrix through Cholesky decomposition.
+	# To obtain [L]*, just transpose the matrix, it should work.
 	def cholesky_factor
 		# We need a symmetric matrix for Cholesky.
 		raise ArgumentError, "must provide a symmetric matrix" unless symmetric?
@@ -64,10 +66,10 @@ class Matrix
 			(0..self.column_size - 1).each do |column_number|
 				printf("%8.4f ", self[row_number, column_number])
 			end
-			
+
 			printf("\n")
 		end
-		
+
 		self
 	end
 end
