@@ -28,7 +28,7 @@ class ScoreSetTest < Minitest::Test
 
 		# I don't think any team is every playing on both blue and red at the same time, but I might be wrong.
 
-		# 0 1 2 3 4 5 6 7 8 9
+		#                   0  1  2  3  4  5  6  7  8  9
 		test_ared = Matrix[[1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
 		                   [0, 1, 0, 1, 0, 1, 0, 0, 0, 0],
 		                   [0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
@@ -36,7 +36,7 @@ class ScoreSetTest < Minitest::Test
 		                   [0, 1, 0, 0, 0, 1, 1, 0, 0, 0],
 		                   [1, 0, 0, 1, 0, 0, 1, 0, 0, 0]]
 
-		# 0 1 2 3 4 5 6 7 8 9
+		#                    0  1  2  3  4  5  6  7  8  9
 		test_ablue = Matrix[[0, 0, 1, 0, 0, 0, 0, 1, 0, 1],
 		                    [1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
 		                    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
