@@ -1,7 +1,11 @@
 Gem::Specification.new do |s|
 	s.name        = "opr-calc"
+	s.email       = "kristofer.rye@gmail.com"
 	s.version     = "0.1.1"
+
 	s.summary     = "A tool for calculating OPR and other scouting stats for FRC teams."
+	s.description = "A tool for calculating OPR and other scouting stats for FRC teams on either a competitionly or seasonly basis."
+
 	s.authors     = ["Christopher Cooper",
 	                 "Sam Craig",
 	                 "Kristofer Rye"]
