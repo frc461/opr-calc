@@ -77,7 +77,6 @@ module OPRCalc
 			end
 
 			# This will end up looking like as follows:
-
 			# [[red[0]],
 			#  [red[1]],
 			#  [red[2]],
