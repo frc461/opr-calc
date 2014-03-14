@@ -55,9 +55,12 @@ module OPRCalc
 		# A generic function for smooshing two matrices (one red, one blue).
 		# Each should have the same dimensions.
 		def alliance_smooshey(redmatrix, bluematrix)
-			throw ArgumentError "Matrices must have same dimensions" unless (redmatrix.row_size == bluematrix.row_size) && (redmatrix.column_size == bluematrix.column_size)
+			throw ArgumentError "Matrices must have same dimensions" unless
+				(redmatrix.row_size == bluematrix.row_size) &&
+				(redmatrix.column_size == bluematrix.column_size)
 
-			# Then we just pull the column and row size from the red matrix because we can.
+			# Then we just pull the column and row size
+			# from the red matrix because we can.
 			column_count = redmatrix.column_size
 			row_count = redmatrix.row_size
 
@@ -92,7 +95,8 @@ module OPRCalc
 
 		# Solve equation of form [l][x] = [s] for [x]
 		# l must be a lower triangular matrix.
-		# Based off of algorithm given at `http://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution`.
+		# Based off of algorithm given at
+		# `http://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution`.
 		def forward_substitute(l, s)
 			raise "l must be a lower triangular matrix" unless l.lower_triangular?
 
@@ -146,7 +150,9 @@ module OPRCalc
 			back_substitute l.t, y
 		end
 
-		# Offensive power rating: the average amount of points that a team contributes to their alliance's score.
+		# Offensive power rating: the average amount of points that a team
+		# contributes to their alliance's score.
+		#
 		# This is high for a good team.
 		def opr(recalc = false)
 			if !@opr || recalc || @opr_recalc
@@ -160,12 +166,17 @@ module OPRCalc
 			@opr
 		end
 
-		# Defensive power rating: the average amount of points that a team lets the other alliance score.
+		# Defensive power rating: the average amount of points that a team lets
+		# the other alliance score.
+		#
 		# This is low for a good team.
 		def dpr(recalc = false)
 			if !@dpr || recalc || @dpr_recalc
 				a = alliance_smooshey @ared, @ablue
-				score = alliance_smooshey @scoreblue, @scorered # intentionally swapped, that's how dpr works.
+
+				# scoreblue and scorered are intentionally
+				# swapped; that's how dpr works.
+				score = alliance_smooshey @scoreblue, @scorered
 
 				@dpr = opr_calculate a, score
 				@dpr_recalc = false
@@ -174,8 +185,10 @@ module OPRCalc
 			@dpr
 		end
 
-		# Calculated contribution to winning margin: the average amount of points that a team contributes to their alliance's winning margin.
-		# This is high for a good team.
+		# Calculated contribution to winning margin: the average amount of
+		# points that a team contributes to their alliance's winning margin.
+		#
+		# This value is high for a good team.
 		def ccwm(recalc = false)
 			if !@ccwm || recalc || @ccwm_recalc
 				a = alliance_smooshey @ared, @ablue
