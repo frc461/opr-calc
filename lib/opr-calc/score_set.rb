@@ -24,17 +24,17 @@ module OPRCalc
 			@ared = value
 			@opr_recalc = @dpr_recalc = @ccwm_recalc = true
 		end
-		
+
 		def ablue=(value)
 			@ablue = value
 			@opr_recalc = @dpr_recalc = @ccwm_recalc = true
 		end
-		
+
 		def scorered=(value)
 			@scorered = value
 			@opr_recalc = @dpr_recalc = @ccwm_recalc = true
 		end
-		
+
 		def scoreblue=(value)
 			@scoreblue = value
 			@opr_recalc = @dpr_recalc = @ccwm_recalc = true
@@ -45,7 +45,7 @@ module OPRCalc
 			raise TypeError, "ablue must be a Matrix" unless ablue.is_a? Matrix
 			raise TypeError, "scorered must be a Matrix" unless scorered.is_a? Matrix
 			raise TypeError, "scoreblue must be a Matrix" unless scoreblue.is_a? Matrix
-			
+
 			@ared = ared
 			@ablue = ablue
 			@scorered = scorered
@@ -72,7 +72,7 @@ module OPRCalc
 					bluematrix[row - row_count, column]
 				end
 			end
-			
+
 			# This will end up looking like as follows:
 
 			# [[red[0]],
@@ -100,11 +100,11 @@ module OPRCalc
 
 			x.size.times do |i|
 				x[i] = s[i, 0]
-				
+
 				i.times do |j|
 					x[i] -= l[i, j] * x[j]
 				end
-				
+
 				x[i] /= l[i, i]
 			end
 
@@ -120,11 +120,11 @@ module OPRCalc
 
 			(x.size - 1).downto 0 do |i|
 				x[i] = s[i, 0]
-				
+
 				(i + 1).upto(x.size - 1) do |j|
 					x[i] -= u[i, j] * x[j]
 				end
-				
+
 				x[i] /= u[i, i]
 			end
 
@@ -152,11 +152,11 @@ module OPRCalc
 			if !@opr || recalc || @opr_recalc
 				a = alliance_smooshey @ared, @ablue
 				score = alliance_smooshey @scorered, @scoreblue
-				
+
 				@opr = opr_calculate a, score
 				@opr_recalc = false
 			end
-			
+
 			@opr
 		end
 
@@ -166,11 +166,11 @@ module OPRCalc
 			if !@dpr || recalc || @dpr_recalc
 				a = alliance_smooshey @ared, @ablue
 				score = alliance_smooshey @scoreblue, @scorered # intentionally swapped, that's how dpr works.
-				
+
 				@dpr = opr_calculate a, score
 				@dpr_recalc = false
 			end
-			
+
 			@dpr
 		end
 
@@ -179,11 +179,11 @@ module OPRCalc
 		def ccwm(recalc = false)
 			if !@ccwm || recalc || @ccwm_recalc
 				a = alliance_smooshey @ared, @ablue
-				
+
 				red_wm = Matrix.build(@scorered.row_size, @scorered.column_size) do |row, column|
 					@scorered[row, column] - @scoreblue[row, column]
 				end
-				
+
 				blue_wm = Matrix.build(@scoreblue.row_size, @scoreblue.column_size) do |row, column|
 					@scoreblue[row, column] - @scorered[row, column]
 				end
@@ -193,7 +193,7 @@ module OPRCalc
 				@ccwm = opr_calculate a, score
 				@ccwm_recalc = false
 			end
-			
+
 			@ccwm
 		end
 	end
