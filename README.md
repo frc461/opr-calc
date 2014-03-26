@@ -1,12 +1,10 @@
-opr-calc
-========
+# opr-calc
 
 [![Gem Version](https://badge.fury.io/rb/opr-calc.png)](http://badge.fury.io/rb/opr-calc)
 
 A rubygem for calculating the OPR, DPR, and CCWM of FRC teams.
 
-Usage
------
+## Usage
 
 Define a new ScoreSet with `OPRCalc::ScoreSet.new`. This takes four matrices as arguments: `ared`, `ablue`, `scorered`, and `scoreblue`.
 The `a` matrices define what teams are in what matches.
