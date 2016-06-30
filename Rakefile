@@ -1,6 +1,6 @@
-require "rake/testtask"
+require 'rake/testtask'
 
-desc "Run tests"
+desc 'Run tests'
 Rake::TestTask.new do |task|
-	task.libs << "test"
+	task.libs << 'test'
 end
