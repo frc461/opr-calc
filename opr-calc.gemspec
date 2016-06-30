@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
 	s.version     = '0.1.3'
 
 	s.summary     = 'A tool for calculating OPR and other scouting stats for FRC teams.'
-	s.description = 'A tool for calculating OPR and other scouting stats for FRC teams on either a competitionly or seasonly basis.'
+	s.description = "A tool for calculating the OPR, DPR, and CCWM of FRC teams, allowing for more detailed analysis of a team's projected performance.  Uses the internal Ruby Matrix library for basic Matrix operations."
 
 	s.authors     = ['Kristofer Rye',
 	                 'Christopher Cooper',
