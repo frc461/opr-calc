@@ -1,6 +1,4 @@
-require 'rake/testtask'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new :spec
 
-desc 'Run tests'
-Rake::TestTask.new do |task|
-	task.libs << 'test'
-end
+task default: :spec
