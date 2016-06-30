@@ -4,4 +4,4 @@ dirname=$(dirname $0)
 
 cd $dirname/..
 
-script/cibuild
+script/test
