@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
 	s.license     = 'GPL-3.0'
 
 	s.add_development_dependency 'minitest', '~> 5.2'
-	s.add_development_dependency 'rake', '~> 10.1'
+	s.add_development_dependency 'rake', '~> 11'
 end
