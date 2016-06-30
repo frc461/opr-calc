@@ -1,6 +1,4 @@
-# opr-calc
-
-[![Gem Version](https://badge.fury.io/rb/opr-calc.png)](http://badge.fury.io/rb/opr-calc)
+# opr-calc [![Gem Version](https://badge.fury.io/rb/opr-calc.png)](http://badge.fury.io/rb/opr-calc) [![Build Status](https://travis-ci.org/frc461/opr-calc.svg?branch=master)](https://travis-ci.org/frc461/opr-calc)
 
 A rubygem for calculating the OPR, DPR, and CCWM of FRC teams.
 
