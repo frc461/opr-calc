@@ -11,7 +11,8 @@ Gem::Specification.new do |s|
 	                 'Sam Craig']
 
 	s.homepage    = 'https://github.com/frc461/opr-calc'
-	s.files       = ['lib/opr-calc.rb'] + Dir.glob('lib/**/*.rb')
+	s.files       = Dir['lib/**/*.rb'] + %W[Gemfile opr-calc.gemspec LICENSE README.md Rakefile]
+	s.test_files  = Dir['test/**/*.rb']
 	s.required_ruby_version = '>= 1.9.3'
 	s.license     = 'GPL-3.0'
 
