@@ -16,7 +16,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require "matrix"
+require 'matrix'
 
 # Props to http://rosettacode.org/wiki/Cholesky_decomposition#Ruby :L
 class Matrix
@@ -40,7 +40,7 @@ class Matrix
 	# To obtain [L]*, just transpose the matrix, it should work.
 	def cholesky_factor
 		# We need a symmetric matrix for Cholesky decomposition.
-		raise ArgumentError, "must provide a symmetric matrix" unless symmetric?
+		raise ArgumentError, 'must provide a symmetric matrix' unless symmetric?
 
 		# Make a new matrix to return.
 		l = Array.new(row_size) { Array.new(row_size, 0) }
@@ -72,11 +72,11 @@ class Matrix
 		(0..self.row_size - 1).each do |row_number|
 			(0..self.column_size - 1).each do |column_number|
 
-				printf("%8.4f ", self[row_number, column_number])
+				printf('%8.4f ', self[row_number, column_number])
 
 			end
 
-			printf("\n")
+			printf('\n')
 		end
 
 		self

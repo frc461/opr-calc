@@ -41,10 +41,10 @@ module OPRCalc
 		end
 
 		def initialize(ared, ablue, scorered, scoreblue)
-			raise TypeError, "ared must be a Matrix" unless ared.is_a? Matrix
-			raise TypeError, "ablue must be a Matrix" unless ablue.is_a? Matrix
-			raise TypeError, "scorered must be a Matrix" unless scorered.is_a? Matrix
-			raise TypeError, "scoreblue must be a Matrix" unless scoreblue.is_a? Matrix
+			raise TypeError, 'ared must be a Matrix' unless ared.is_a? Matrix
+			raise TypeError, 'ablue must be a Matrix' unless ablue.is_a? Matrix
+			raise TypeError, 'scorered must be a Matrix' unless scorered.is_a? Matrix
+			raise TypeError, 'scoreblue must be a Matrix' unless scoreblue.is_a? Matrix
 
 			@ared = ared
 			@ablue = ablue
@@ -55,7 +55,7 @@ module OPRCalc
 		# A generic function for smooshing two matrices (one red, one blue).
 		# Each should have the same dimensions.
 		def alliance_smooshey(redmatrix, bluematrix)
-			throw ArgumentError "Matrices must have same dimensions" unless
+			throw ArgumentError 'Matrices must have same dimensions' unless
 				(redmatrix.row_size == bluematrix.row_size) &&
 				(redmatrix.column_size == bluematrix.column_size)
 
@@ -97,7 +97,7 @@ module OPRCalc
 		# Based off of algorithm given at
 		# `http://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution`.
 		def forward_substitute(l, s)
-			raise "l must be a lower triangular matrix" unless l.lower_triangular?
+			raise 'l must be a lower triangular matrix' unless l.lower_triangular?
 
 			x = Array.new s.row_size
 
@@ -117,7 +117,7 @@ module OPRCalc
 		# Solve equation of form [u][x] = [s] for [x]
 		# u must be a upper triangular matrix.
 		def back_substitute(u, s)
-			raise "u must be an upper triangular matrix" unless u.upper_triangular?
+			raise 'u must be an upper triangular matrix' unless u.upper_triangular?
 
 			x = Array.new s.row_size
 

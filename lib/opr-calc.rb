@@ -16,5 +16,5 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require "opr-calc/matrix.rb"
-require "opr-calc/score_set.rb"
+require 'opr-calc/matrix.rb'
+require 'opr-calc/score_set.rb'
